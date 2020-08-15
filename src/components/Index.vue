@@ -1,18 +1,28 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <my-header ></my-header>
 
+    <!--    <my-footer title="登录下边框"></my-footer>-->
   </div>
 </template>
 
 <script>
+import MyHeade from '@/components/Heade';
+// import MyFooter from '/@/components/Footer';
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: '1911-TD'
     }
+  },
+  components:{
+    MyHeader:MyHeade,
+    // MyFooter:MyFooter,
+  },
+  methods:{
+
   }
 }
 </script>

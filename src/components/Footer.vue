@@ -1,17 +1,18 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+
 
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Footer',
+  // 组件的参数
+  props: ['title'],
   data () {
     return {
-      msg: '1911-TD'
+      title:''
     }
   }
 }
