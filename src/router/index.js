@@ -5,6 +5,7 @@ import Index from '@/components/Index/Index'
 import List from '@/components/Index/List'
 import Details from '@/components/Index/Details'
 import Login from '@/components/Index/Login'
+import Reg from '@/components/Index/Reg'
 import PersInfo from '@/components/Index/PersInfo'
 import Search from '@/components/Index/Search'
 Vue.use(Router)
@@ -30,6 +31,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/reg',
+      name: 'Reg',
+      component: Reg
     },
     {
       path: '/persinfo',
