@@ -14,7 +14,7 @@ module.exports = {
       // 请求带api的全部按照一下规则处理
       '/api':{
         // 转发到该域名
-        target: 'http://1911td1.yangwenlong.top/',
+        target: 'http://1911td2.yangwenlong.top/',
         // 开启代理
         changeOrigin: true,
         pathRewrite: {
