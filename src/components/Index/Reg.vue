@@ -13,24 +13,24 @@
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text"  name="img_code" lay-verify="required" id="imgCode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                <input type="text"  name="img_code" v-model="img_code" lay-verify="required" id="imgCode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                 <img src="http://1911td2.yangwenlong.top/user/text">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text"  name="user_code" lay-verify="required" placeholder="请输入短信验证码" autocomplete="off" class="layui-input">
+                <input type="text"  name="code" v-model="code" lay-verify="required" placeholder="请输入短信验证码" autocomplete="off" class="layui-input">
                 <input type="button"  id="veriCodeBtn" name="" value="验证码" class="obtain layui-btn">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text"  name="user_pwd" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text"  name="user_pwd" v-model="user_pwd" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text"  name="password" lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+                <input type="text"  name="password" v-model="password" lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item agreement">
@@ -42,7 +42,7 @@
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="*"  @click="sendAjax" onclick="return false">注册</button>
+                <button class="layui-btn" lay-submit lay-filter="*"  v-on:click="sendAjax" onclick="return false">注册</button>
               </div>
             </div>
             <div class="layui-form-item">
@@ -73,12 +73,11 @@
     data () {
       return {
         user_name:'13653130993',
-        user_pwd:'',
-        password:'',
-        img_code:'',
-        user_code:'',
-
-
+        user_pwd:'4444444',
+        password:'4444444',
+        img_code:'1111',
+        code:'11',
+        tt:'1',
       }
     },
     mixins:[Common],
@@ -90,34 +89,57 @@
         this.$router.push({name: 'Login'});
       },
       sendAjax: function () {
-        if(this.user_name == ''){
-          layui.layer.alert('请输入手机号码',{icon:6});
-          return false;
-        }
-        // if(this.img_code == ''){
-        //   this.msg('请输入图片验证码');
+        // if(this.user_name == ''){
+        //   alert("用户名不能为空！");
         //   return false;
         // }
-        // if(this.user_code == ''){
-        //   this.msg('请输入短信验证码');
+        // let reg=/^1[0-9]{10}$/;
+        // if(!reg.test(this.user_name)){
+        //   alert('手机号格式不对');
+        //   return false;
+        // }
+        // if(this.img_code == ''){
+        //   alert('请输入图片验证码');
+        //   return false;
+        // }
+        // if(this.code == ''){
+        //   alert('请输入短信验证码');
         //   return false;
         // }
         // if(this.user_pwd == ''){
-        //   this.msg('注册密码不能为空');
+        //   alert('注册密码不能为空');
         //   return false;
         // }
         // if(this.user_pwd.length < 6){
-        //   this.msg('密码不能小于6位');
+        //   alert('密码不能小于6位');
         //   return false;
         // }
-        // if(this.user_pwd1 == ''){
-        //   this.msg('确认密码不能为空');
+        // if(this.password == ''){
+        //   alert('确认密码不能为空');
         //   return false;
         // }
-        // if(this.user_pwd != this.user_pwd1){
-        //   this.msg('密码与确认密码保持一致');
+        // if(this.user_pwd != this.password){
+        //   alert('密码与确认密码保持一致');
         //   return false;
         // }
+
+        this.$http.post("/api/user/Api/reg",{
+          user_name:this.user_name,
+          user_pwd:this.user_pwd,
+          img_code:this.img_code,
+          code:this.code,
+          type:this.type,
+          tt:this.tt,
+        }).then(success=>{
+          console.log(success);
+          if(success.body.status == 0){
+            alert(success);
+          }else{
+            alert(success.body.msg);
+          }
+        },error=>{
+          alert(success.body.msg);
+        });
         // // this.RegCode();
         // this.$http.post('/user/register', {
         //   user_tel:this.user_tel,
@@ -138,7 +160,13 @@
       }
     },
     mounted(){
-
+      this.$http.post('/user/getImageCodeUrl').then(response => {
+        console.log(response);
+        this.check_code=response.body.data.url
+        this.sid=response.body.data.sid
+      }, error => {
+        this.msg('请求失败，请重试');
+      })
     }
   }
 </script>

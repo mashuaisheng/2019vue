@@ -7,6 +7,12 @@ import Login from '@/components/Index/Login'
 import Reg from '@/components/Index/Reg'
 import PersInfo from '@/components/Index/PersInfo'
 import Search from '@/components/Index/Search'
+// 引入http请求相关类库
+import VueResource from 'vue-resource'
+//使用http请求相关类库
+Vue.use(VueResource)
+// 确保post请求不会被转换为 options 请求
+Vue.http.options.emulateJSON = true
 Vue.use(Router)
 
 export default new Router({
