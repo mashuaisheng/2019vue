@@ -15,7 +15,7 @@
               <div class="layui-input-block">
                 <input type="text"  name="img_code" v-model="img_code" lay-verify="required" id="imgCode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                 <img :src="check_code" @click="changeImgCode">
-<!--                <img src="http://1911api.com/user/showImageCode?sid=eewOlfTbOM5IcRtDpwyq996nOgIujT8OXiHiVI7p">-->
+                <img src="http://1911td2.yangwenlong.top/user/showImageCode">
               </div>
             </div>
             <div class="layui-form-item">
@@ -113,13 +113,14 @@
           alert('请输入图片验证码');
           return false;
         }
-        this.$http.post("/user/ImageCodeUrl",{
-
-        }).then(success=>{
-          alert(success);
+        this.$http.post("/api/user/Sendverificationcode/",{user_name:this.user_name,tt:1}).then(succes=>{
+          console.log(succes);
+          if(succes.boyd.msg == 0){
+            console.log(succes);
+          }
         },error=>{
-          alert(error);
-        });
+          alert(succes.body.status);
+        })
       },
 
 
@@ -172,10 +173,10 @@
           if(success.body.status == 0){
             alert(success);
           }else{
-            alert(success.body.msg);
+            alert(success.body.status);
           }
         },error=>{
-          alert(success.body.msg);
+          alert(success.body.status);
         });
         // // this.RegCode();
         // this.$http.post('/user/register', {
