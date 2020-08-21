@@ -8,12 +8,12 @@
         <form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text" name="" lay-verify="required|phone" id="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+              <input type="text" name="" lay-verify="required|phone"  v-model="user_tel" id="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text"  name="" lay-verify="required" id="imgCode" placeholder="请输入密码" autocomplete="off" class="layui-input">
+              <input type="text"  name="" lay-verify="required" v-model="password" id="pwd" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item agreement">
@@ -24,7 +24,7 @@
           </div>
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <button class="layui-btn" lay-submit lay-filter="*" onclick="return false">登录</button>
+              <button class="layui-btn" lay-submit lay-filter="*" v-on:click="DoLogin" onclick="return false">登录</button>
             </div>
           </div>
           <div class="layui-form-item">
@@ -47,25 +47,64 @@
   </div>
   </div>
 </template>
+
 <script>
-  import MyHeader from '@/components/Index/Top'
+  import Header from '@/components/Index/Top'
+  //import Header from '@/components/Public/Header'
+  import Common from '@/mixin/Common.js'
   export default {
-    name: 'Login',
-    data () {
+    name: "Login",
+    mixins:[Common],
+    components: {
+      MyHeader: Header,
+    },
+    data() {
       return {
-
+        user_tel: '13463436743',
+        ad: 2,
+        show: true,
+        check_code: '',
+        sid: '',
+        password:'',
       }
     },
-    components:{
-      MyHeader:MyHeader
-    },
-    methods:{
-      reg:function () {
-        this.$router.push({name: 'Reg'});
+    methods: {
+      reg: function () {
+        this.$router.push({name: 'reg'});
+      },
+      DoLogin:function () {
+        let mat=/^1[0-9]{10}$/;
+        if(this.user_tel == ''){
+          this.msg('手机号不能为空');
+          return false;
+        }
+        if(!mat.test(this.user_tel)){
+          this.msg('手机号格式不对');
+          return false;
+        }
+        if(this.password==''){
+          this.msg('密码不能为空');
+          return false;
+        }
+        if(this.user_tel.length<6){
+          this.msg('密码最长为6位');
+          return false;
+        }
+        this.$http.post('/user/login', {
+          user_tel:this.user_tel,
+          password:this.password,
+          tt:1
+        }).then(response => {
+          console.log(response);
+          if(response.body.status==200){
+            this.msg('登录成功');
+          }else{
+            this.msg(response.body.msg);
+          }
+        }, error=> {
+          console.log(error)
+        })
       }
-    },
-    mounted(){
-
     }
   }
 </script>

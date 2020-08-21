@@ -2,18 +2,13 @@
   <div class="micronews-header-wrap">
     <div class="micronews-header w1000 layui-clear">
       <h1 class="logo">
-        <a href="javascript:;">
+        <a href="javascript:;" @click="Login()">
           <img src="@/assets/static/images/LOGO.png" alt="logo">
           <span class="layui-hide">LOGO</span>
         </a>
       </h1>
-      <p class="nav">
-        <a href="javascript:;" @click="Index()" class="active">最新</a>
-        <a href="javascript:;" @click="List()">娱乐</a>
-        <a href="javascript:;" @click="Details()">生活</a>
-        <a href="javascript:;" @click="PersInfo()">财经</a>
-        <a href="javascript:;" @click="Search()">科技</a>
-        <a href="javascript:;" @click="Index()">军事</a>
+      <p class="nav" v-for="(v,k) in cat_name">
+        <a href="javascript:;"  class="active+">{{v.cat_name}}</a>
       </p>
       <div class="search-bar">
         <form class="layui-form" action="">
@@ -45,6 +40,11 @@
    import "@/assets/layui/layui.js"
   export default {
     name: "Header",
+    data () {
+      return {
+        "cat_name":[],
+      }
+    },
     methods: {
       Index: function () {
         // 通过路由跳转的方式实现页面跳转
@@ -70,6 +70,19 @@
         // 通过路由跳转的方式实现页面跳转
         this.$router.push({name: 'Login'})
       },
-    }
+    },
+    mounted(){
+      Desc:{
+        this.$http.post("/api/user/cat").then(success=>{
+          // console.log(this.cat_name);
+          // console.log(success);
+          if(success.status == 200){
+            this.cat_name =this.cat_name.concat(success.body.data);
+          }
+        },error=>{
+          alert(success);
+        });
+      }
+    },
   }
 </script>
