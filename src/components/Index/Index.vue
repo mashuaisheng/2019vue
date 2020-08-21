@@ -3,15 +3,13 @@
     <my-header></my-header>
   <div class="layui-fulid micronews-banner w1000">
     <div class="layui-carousel imgbox" id="micronews-carouse">
-      <div carousel-item>
-        <div>
-          <p class="title">去南非旅行需要做什么准备</p>
-          <a href="list.html"><img src="@/assets/static/images/news_img1.jpg"></a>
+      <div carousel-item v-for="(v,k) in list">
+        <div >
+          <p class="title" v-bind:key="k">{{v.news_title}}</p>
+          <a href="list.html" v-bind:key="k"><img src="@/assets/static/images/news_img1.jpg"></a>
+          <!--          {{v.news_img}}-->
         </div>
-        <div>
-          <p class="title">去南非旅行需要做什么准备</p>
-          <a href="list.html"><img src="@/assets/static/images/news_img1.jpg"></a>
-        </div>
+
       </div>
     </div>
   </div>
@@ -325,7 +323,7 @@
     name: 'Index',
     data () {
       return {
-
+        list:[],
       }
     },
     methods:{
