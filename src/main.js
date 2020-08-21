@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
+import VueResource from 'vue-resource'// 引入http请求相关类库
+
+Vue.use(VueResource)//使用http请求相关类库
+Vue.http.options.emulateJSON = true// 确保post请求不会被转换为 options 请求
+
 Vue.config.productionTip = false
 
 new Vue({

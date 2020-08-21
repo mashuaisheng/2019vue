@@ -7,6 +7,7 @@ import Login from '@/components/Index/Login'
 import Reg from '@/components/Index/Reg'
 import PersInfo from '@/components/Index/PersInfo'
 import Search from '@/components/Index/Search'
+
 Vue.use(Router)
 
 export default new Router({
