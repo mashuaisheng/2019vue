@@ -79,7 +79,7 @@
         user_name:'13653130993',
         user_pwd:'4444444',
         password:'4444444',
-        img_code:'',
+        img_code:'34444',
         code:'',
         tt:'1',
         check_code:'',
@@ -113,13 +113,18 @@
           alert('请输入图片验证码');
           return false;
         }
-        this.$http.post("/api/user/Sendverificationcode/",{user_name:this.user_name,tt:1}).then(succes=>{
-          console.log(succes);
-          if(succes.boyd.msg == 0){
-            console.log(succes);
+        this.$http.post("/api/user/Sendverificationcode/",{
+          user_name:this.user_name,
+          tt:"1",
+        }).then(succes=>{
+          // console.log(succes);
+          if(succes.status == 200){
+              alert(succes.body.msg);
+          }else{
+            alert(succes.msg);
           }
         },error=>{
-          alert(succes.body.status);
+          alert(succes);
         })
       },
 
@@ -170,13 +175,13 @@
           tt:this.tt,
         }).then(success=>{
           console.log(success);
-          if(success.body.status == 0){
-            alert(success);
+          if(success.status == 200){
+            this.$router.push({name: 'Login',query:{appid:success.data}});
           }else{
-            alert(success.body.status);
+            alert(success.body.msg);
           }
         },error=>{
-          alert(success.body.status);
+          alert(success.body.msg);
         });
         // // this.RegCode();
         // this.$http.post('/user/register', {
