@@ -97,7 +97,8 @@
         }).then(response => {
           console.log(response);
           if(response.body.status==200){
-            this.msg('登录成功');
+            this.msg('登录成功')
+
           }else{
             this.msg(response.body.msg);
           }
