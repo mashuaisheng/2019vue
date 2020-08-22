@@ -33,6 +33,7 @@
                   <h4><a @click="details(v.news_id)">{{v.news_title}}</a></h4>
                   <div class="b-txt">
                     <span class="label">{{v.cat_name}}</span>
+                    <span class="label">{{v.get_cate.cat_name}}</span>
                     <span class="icon message">
                       <i class="layui-icon layui-icon-dialogue"></i>
                       {{v.comment_count}}

@@ -10,6 +10,9 @@
               <h3>{{t_details['news_title']}}</h3>
               <div class="b-txt">
                 <span class="label"></span>
+              <h3>{{t_deta.news_title}}</h3>
+              <div class="b-txt">
+                <span class="label">{{t_deta.get_cate.cat_name}}</span>
                 <span class="icon">
                   <i class="layui-icon layui-icon-radio"></i>
                   <b>50</b>人
@@ -18,11 +21,13 @@
                 <span class="icon message" >
                   <i class="layui-icon layui-icon-dialogue"></i>
                   <b>{{t_details['comment_count']}}</b>条
+                  <b>{{t_deta.comment_count}}</b>条
                 </span>
                 </a>
                 <span class="icon time">
                   <i class="layui-icon layui-icon-log"></i>
                   {{t_details['publish_time']}}
+                  {{t_deta.publish_time}}
                 </span>
               </div>
             </div>
@@ -32,6 +37,10 @@
              
               <div class="img-box"><img onclick="javascript:window.open(this.src)" :src="t_details['news_img']"></div>
               {{t_details['news_content']}}
+              <p class="original-tit mt30">原标题：<span>{{t_deta.news_title}}</span></p>
+             
+              <div class="img-box"><img onclick="javascript:window.open(this.src)" :src="t_deta.news_img"></div>
+              {{t_deta.news_content}}
               <div class="share-title">
                 <span class="txt">分享:</span>
                 <a href="#">
@@ -190,7 +199,7 @@
     name: 'Details',
     data () {
       return {
-
+        t_deta:[]
       }
     },
     components:{
@@ -210,6 +219,7 @@
       this.$http.post('/news/details',newsid).then(response => {
         // console.log( response );
         this.t_details = response.body.data;
+        this.t_deta = response.body.data;
         //alert(this.t_details['news_title']);
       }, error => {
         alert('调用接口失败');
