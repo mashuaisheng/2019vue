@@ -14,7 +14,11 @@ module.exports = {
       // 请求带api的全部按照一下规则处理
       '/':{
         // 转发到该域名
+<<<<<<< HEAD
+        target: 'http://1911dy2.yangwenlong.top/',
+=======
         target: 'http://z1.miaoming.shop',
+>>>>>>> aff3835dd1641e2800b4cb940cb57ea460bbdc2d
         // 开启代理
         changeOrigin: true,
         pathRewrite: {
