@@ -6,34 +6,41 @@
       <div class="layui-row">
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
           <div class="main">
-            <div class="title">
-              <h3>王健林29亿出售美国加州地块</h3>
+            <div class="title"  >
+              <h3>{{t_details['news_title']}}</h3>
               <div class="b-txt">
-                <span class="label">财经</span>
+                <span class="label"></span>
+              <h3>{{t_deta.news_title}}</h3>
+              <div class="b-txt">
+                <span class="label">{{t_deta.get_cate.cat_name}}</span>
                 <span class="icon">
                   <i class="layui-icon layui-icon-radio"></i>
-                  <b>3002</b>人
+                  <b>50</b>人
                 </span>
                 <a href="#message">
                 <span class="icon message" >
                   <i class="layui-icon layui-icon-dialogue"></i>
-                  <b>500</b>条
+                  <b>{{t_details['comment_count']}}</b>条
+                  <b>{{t_deta.comment_count}}</b>条
                 </span>
                 </a>
                 <span class="icon time">
                   <i class="layui-icon layui-icon-log"></i>
-                  10分钟前
+                  {{t_details['publish_time']}}
+                  {{t_deta.publish_time}}
                 </span>
               </div>
             </div>
             <div class="article">
               <p class="source">来源：<span>澎湃新闻网</span></p>
-              <p class="original-tit mt30">原标题：<span>王健林29亿元出售美国加州地块，万达海外只剩一个地产项目</span></p>
-              <p>王健林又卖掉了万达在海外的一个项目。11月16日，据《华尔街日报》报道，大连万达集团同意出售位于美国加州比弗利山庄一块地块。伦敦房地产公司Cain International的首席执行长Jonathan Goldstein称，该公司和Alagem Capital Group的合资企业已经同意收购这块八英亩的地皮，据知情人士，买家已经同意支付逾4.2亿美元（约合29.1亿元）。</p>
-              <div class="img-box"><img onclick="javascript:window.open(this.src)" src="@/assets/static/images/news_imgbig.jpg"></div>
-              <p class="mt30">今年年初，万达聘请仲量联行帮助出售该地块。据《华尔街日报》当时的报道，潜在的投标者最初被告知，万达希望的最低报价为6亿美元，但这一指导价后来降至5亿-6亿美元。由于报价达不到万达的要求，万达似乎在重新考虑该事项。此外，万达已经为这个项目支付高达8000万美元的费用和税款，但项目却迟迟未开工。</p>
-              <p class="mt30">经纪商称，这宗地块被万达称为比佛利山庄一号的空置地块时洛杉矶地区高档开发地块之一。</p>
-              <p class="mt30">大连万达集团的官网上曾在2015年7月9日发表过一篇关于洛杉矶比弗利山项目的报道。当时引用了《洛杉矶时报》的报道称，该报对万达集团这一新项目给予了积极的评价，“万达洛杉矶比弗利山项目将作为其进军好莱坞重要的第一步，有望帮助中国进入好莱坞的电影业，并在国际范围推广中国文化。”</p>
+              <p class="original-tit mt30">原标题：<span>{{t_details['news_title']}}</span></p>
+             
+              <div class="img-box"><img onclick="javascript:window.open(this.src)" :src="t_details['news_img']"></div>
+              {{t_details['news_content']}}
+              <p class="original-tit mt30">原标题：<span>{{t_deta.news_title}}</span></p>
+             
+              <div class="img-box"><img onclick="javascript:window.open(this.src)" :src="t_deta.news_img"></div>
+              {{t_deta.news_content}}
               <div class="share-title">
                 <span class="txt">分享:</span>
                 <a href="#">
@@ -192,7 +199,7 @@
     name: 'Details',
     data () {
       return {
-
+        t_deta:[]
       }
     },
     components:{
@@ -201,9 +208,22 @@
     },
     methods:{
 
+
     },
     mounted(){
-
+      var news_id = parseInt(this.$route.query.news_id);
+      console.log(news_id);
+      let newsid = {
+        news_id:news_id
+      };
+      this.$http.post('/news/details',newsid).then(response => {
+        // console.log( response );
+        this.t_details = response.body.data;
+        this.t_deta = response.body.data;
+        //alert(this.t_details['news_title']);
+      }, error => {
+        alert('调用接口失败');
+      });
     }
   }
 </script>
